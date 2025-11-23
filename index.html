@@ -217,4 +217,14 @@
         calendarRow.appendChild(cell);
       }
 
-     
+      grid.appendChild(calendarRow);
+    }
+
+    function exportCalendar() {
+      window.print();
+    }
+
+    window.addEventListener('DOMContentLoaded', generateCalendar);
+  </script>
+</body>
+</html>
