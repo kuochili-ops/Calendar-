@@ -227,4 +227,18 @@ function generateCalendar() {
       cell.textContent = dayNum;
       const dateStr = `${year}-${month}-${dayNum}`;
       if (holidays[dateStr]) {
-        const holidayTag = document.create
+        const holidayTag = document.createElement('div');
+        holidayTag.className = 'holiday';
+        holidayTag.textContent = holidays[dateStr];
+        cell.appendChild(holidayTag);
+      }
+    }
+    calendarRow.appendChild(cell);
+  }
+
+  grid.appendChild(calendarRow);
+}
+
+function exportCalendar() {
+  window.print();
+}
