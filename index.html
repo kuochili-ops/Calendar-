@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <title>美女月曆 A4 直式</title>
+  <title>美女月曆 A4 排版</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
@@ -24,20 +24,18 @@
     }
 
     .calendar-output {
-      width: 210mm;   /* A4 寬度 */
-      max-width: 100%;
-      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
       background: #fff;
       border-radius: 8px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      margin: 0 auto;
     }
 
     .photo-preview img {
       width: 100%;
-      max-height: 280mm; /* 上半部圖片 */
       object-fit: cover;
       border-radius: 8px 8px 0 0;
     }
@@ -89,18 +87,35 @@
       margin-top: 2px;
     }
 
-    /* 列印設定：直式 A4，隱藏控制區 */
+    /* 直式排版 */
+    .portrait {
+      flex-direction: column;
+      width: 210mm;
+      height: 297mm;
+    }
+
+    .portrait .photo-preview img {
+      max-height: 50%;
+    }
+
+    /* 橫式排版 */
+    .landscape {
+      flex-direction: row;
+      width: 297mm;
+      height: 210mm;
+    }
+
+    .landscape .photo-preview img {
+      max-width: 50%;
+      height: 100%;
+    }
+
+    /* 列印設定 */
     @media print {
       .controls { display: none; }
       body { background: #fff; padding: 0; }
       .calendar-output {
-        width: 210mm;
-        height: 297mm; /* A4 高度 */
         box-shadow: none;
-      }
-      .photo-preview img {
-        max-height: 50%; /* 上半部圖片 */
-        border-radius: 0;
       }
       .calendar-grid {
         padding: 10mm;
@@ -114,11 +129,15 @@
     <input type="file" id="photoUpload" accept="image/*">
     <select id="yearSelect"></select>
     <select id="monthSelect"></select>
+    <select id="layoutSelect">
+      <option value="portrait">直式 A4</option>
+      <option value="landscape">橫式 A4</option>
+    </select>
     <button onclick="generateCalendar()">產生月曆</button>
     <button onclick="exportCalendar()">匯出 PDF</button>
   </div>
 
-  <div class="calendar-output">
+  <div class="calendar-output portrait" id="calendarOutput">
     <div class="photo-preview">
       <img id="previewImage" src="" alt="預覽圖片">
     </div>
@@ -128,9 +147,10 @@
   <script>
     const yearSelect = document.getElementById('yearSelect');
     const monthSelect = document.getElementById('monthSelect');
+    const layoutSelect = document.getElementById('layoutSelect');
     const previewImage = document.getElementById('previewImage');
+    const calendarOutput = document.getElementById('calendarOutput');
 
-    // 填入年份選項
     for (let y = 2020; y <= 2030; y++) {
       const opt = document.createElement('option');
       opt.value = y;
@@ -138,7 +158,6 @@
       yearSelect.appendChild(opt);
     }
 
-    // 填入月份選項
     for (let m = 1; m <= 12; m++) {
       const opt = document.createElement('option');
       opt.value = m;
@@ -146,7 +165,6 @@
       monthSelect.appendChild(opt);
     }
 
-    // 圖片上傳預覽
     document.getElementById('photoUpload').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (file) {
@@ -154,7 +172,11 @@
       }
     });
 
-    // 台灣常見國定假日（示範：部分假日）
+    layoutSelect.addEventListener('change', function() {
+      calendarOutput.classList.remove('portrait', 'landscape');
+      calendarOutput.classList.add(layoutSelect.value);
+    });
+
     const holidays = {
       "2025-1-1": "元旦",
       "2025-2-28": "和平紀念日",
@@ -221,7 +243,6 @@
       grid.appendChild(calendarRow);
     }
 
-    // 匯出 PDF（透過瀏覽器列印）
     function exportCalendar() {
       window.print();
     }
