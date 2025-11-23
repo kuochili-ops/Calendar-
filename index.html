@@ -26,7 +26,8 @@
 
   <div class="calendar-output portrait vertical" id="calendarOutput">
     <div class="photo-preview">
-      <img id="previewImage" src="" alt="預覽圖片">
+      <!-- 預設顯示 IMG_5395.png -->
+      <img id="previewImage" src="IMG_5395.png" alt="預覽圖片">
     </div>
     <div class="calendar-grid" id="calendarGrid"></div>
   </div>
@@ -145,6 +146,13 @@ for (let m = 1; m <= 12; m++) {
   monthSelect.appendChild(opt);
 }
 
+// 預設選擇 2025 年 12 月
+yearSelect.value = 2025;
+monthSelect.value = 12;
+
+// 預設圖片
+previewImage.src = "IMG_5395.png";
+
 // 圖片上傳預覽
 document.getElementById('photoUpload').addEventListener('change', function(e) {
   const file = e.target.files[0];
@@ -219,18 +227,4 @@ function generateCalendar() {
       cell.textContent = dayNum;
       const dateStr = `${year}-${month}-${dayNum}`;
       if (holidays[dateStr]) {
-        const holidayTag = document.createElement('div');
-        holidayTag.className = 'holiday';
-        holidayTag.textContent = holidays[dateStr];
-        cell.appendChild(holidayTag);
-      }
-    }
-    calendarRow.appendChild(cell);
-  }
-
-  grid.appendChild(calendarRow);
-}
-
-function exportCalendar() {
-  window.print();
-}
+        const holidayTag = document.create
