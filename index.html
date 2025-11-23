@@ -4,94 +4,7 @@
   <meta charset="UTF-8">
   <title>美女月曆 A4 排版</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: 'Noto Sans TC', sans-serif;
-      background: #f0f2f5;
-      margin: 0;
-      padding: 20px;
-      overflow: auto;
-    }
-    .controls {
-      position: relative;
-      z-index: 10;
-      background: #f0f2f5;
-      padding: 10px;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .controls select, .controls input, .controls button {
-      margin: 5px;
-      padding: 8px 12px;
-      font-size: 1rem;
-    }
-    .calendar-output {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      margin: 0 auto;
-      overflow: hidden;
-    }
-    .photo-preview img {
-      width: 100%;
-      max-height: 80vh;
-      object-fit: contain;
-    }
-    .calendar-grid {
-      width: 100%;
-      padding: 20px;
-    }
-    .calendar-grid h2 {
-      text-align: center;
-      margin: 0 0 10px;
-      font-size: 2rem;
-      color: #2c3e50;
-    }
-    .grid {
-      display: grid;
-      border-top: 1px solid #ccc;
-      border-left: 1px solid #ccc;
-    }
-    .cell {
-      min-height: 60px;
-      border-right: 1px solid #ccc;
-      border-bottom: 1px solid #ccc;
-      padding: 6px;
-      font-size: 1rem;
-      position: relative;
-    }
-    .header-cell {
-      background: #2c3e50;
-      color: #fff;
-      text-align: center;
-      font-weight: bold;
-      padding: 6px 0;
-    }
-    .cell.sunday, .cell.saturday {
-      color: #e74c3c;
-    }
-    .holiday {
-      font-size: 0.7rem;
-      font-weight: bold;
-      color: #27ae60;
-      margin-top: 2px;
-    }
-    .portrait { flex-direction: column; width: 210mm; }
-    .landscape { flex-direction: row; width: 297mm; }
-    .portrait .photo-preview img { max-height: 50%; }
-    .landscape .photo-preview img { max-width: 50%; height: 100%; }
-    .vertical .grid { grid-template-columns: repeat(7, 1fr); }
-    .horizontal .grid { grid-template-rows: repeat(6, 1fr); grid-auto-flow: column; }
-    @media print {
-      .controls { display: none; }
-      body { background: #fff; padding: 0; }
-      .calendar-output { box-shadow: none; }
-      .calendar-grid { padding: 10mm; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -118,118 +31,200 @@
     <div class="calendar-grid" id="calendarGrid"></div>
   </div>
 
-  <script>
-    const yearSelect = document.getElementById('yearSelect');
-    const monthSelect = document.getElementById('monthSelect');
-    const layoutSelect = document.getElementById('layoutSelect');
-    const calendarLayout = document.getElementById('calendarLayout');
-    const previewImage = document.getElementById('previewImage');
-    const calendarOutput = document.getElementById('calendarOutput');
+  <script src="script.js"></script>
+</body>
+</html>
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: #f0f2f5;
+  margin: 0;
+  padding: 20px;
+  overflow: auto;
+}
+.controls {
+  position: relative;
+  z-index: 10;
+  background: #f0f2f5;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.controls select, .controls input, .controls button {
+  margin: 5px;
+  padding: 8px 12px;
+  font-size: 1rem;
+}
+.calendar-output {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  margin: 0 auto;
+  overflow: hidden;
+}
+.photo-preview img {
+  width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+}
+.calendar-grid {
+  width: 100%;
+  padding: 20px;
+}
+.calendar-grid h2 {
+  text-align: center;
+  margin: 0 0 10px;
+  font-size: 2rem;
+  color: #2c3e50;
+}
+.grid {
+  display: grid;
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+}
+.cell {
+  min-height: 60px;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  padding: 6px;
+  font-size: 1rem;
+  position: relative;
+}
+.header-cell {
+  background: #2c3e50;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  padding: 6px 0;
+}
+.cell.sunday, .cell.saturday {
+  color: #e74c3c;
+}
+.holiday {
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: #27ae60;
+  margin-top: 2px;
+}
+.portrait { flex-direction: column; width: 210mm; }
+.landscape { flex-direction: row; width: 297mm; }
+.portrait .photo-preview img { max-height: 50%; }
+.landscape .photo-preview img { max-width: 50%; height: 100%; }
+.vertical .grid { grid-template-columns: repeat(7, 1fr); }
+.horizontal .grid { grid-template-rows: repeat(6, 1fr); grid-auto-flow: column; }
+@media print {
+  .controls { display: none; }
+  body { background: #fff; padding: 0; }
+  .calendar-output { box-shadow: none; }
+  .calendar-grid { padding: 10mm; }
+}
+const yearSelect = document.getElementById('yearSelect');
+const monthSelect = document.getElementById('monthSelect');
+const layoutSelect = document.getElementById('layoutSelect');
+const calendarLayout = document.getElementById('calendarLayout');
+const previewImage = document.getElementById('previewImage');
+const calendarOutput = document.getElementById('calendarOutput');
 
-    for (let y = 2020; y <= 2030; y++) {
-      const opt = document.createElement('option');
-      opt.value = y;
-      opt.textContent = y;
-      yearSelect.appendChild(opt);
-    }
+for (let y = 2020; y <= 2030; y++) {
+  const opt = document.createElement('option');
+  opt.value = y;
+  opt.textContent = y;
+  yearSelect.appendChild(opt);
+}
+for (let m = 1; m <= 12; m++) {
+  const opt = document.createElement('option');
+  opt.value = m;
+  opt.textContent = `${m} 月`;
+  monthSelect.appendChild(opt);
+}
+yearSelect.value = 2025;
+monthSelect.value = 12;
+previewImage.src = "IMG_5395.png";
 
-    for (let m = 1; m <= 12; m++) {
-      const opt = document.createElement('option');
-      opt.value = m;
-      opt.textContent = `${m} 月`;
-      monthSelect.appendChild(opt);
-    }
+document.getElementById('photoUpload').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (file) {
+    previewImage.src = URL.createObjectURL(file);
+  }
+});
+layoutSelect.addEventListener('change', function() {
+  calendarOutput.classList.remove('portrait', 'landscape');
+  calendarOutput.classList.add(layoutSelect.value);
+});
+calendarLayout.addEventListener('change', function() {
+  calendarOutput.classList.remove('vertical', 'horizontal');
+  calendarOutput.classList.add(calendarLayout.value);
+});
 
-    yearSelect.value = 2025;
-    monthSelect.value = 12;
-    previewImage.src = "IMG_5395.png";
+const holidays = {
+  "2025-1-1": "元旦",
+  "2025-2-28": "和平紀念日",
+  "2025-4-4": "兒童節",
+  "2025-4-5": "清明節",
+  "2025-5-1": "勞動節",
+  "2025-6-1": "端午節",
+  "2025-9-28": "教師節",
+  "2025-10-10": "國慶日",
+  "2025-12-25": "聖誕節",
+  "2025-12-31": "跨年夜"
+};
 
-    document.getElementById('photoUpload').addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (file) {
-        previewImage.src = URL.createObjectURL(file);
+function generateCalendar() {
+  const year = parseInt(yearSelect.value);
+  const month = parseInt(monthSelect.value);
+  const grid = document.getElementById('calendarGrid');
+  grid.innerHTML = '';
+
+  const monthNames = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+  const title = document.createElement('h2');
+  title.textContent = `${year}年 ${monthNames[month - 1]}`;
+  grid.appendChild(title);
+
+  const weekdays = ['日','一','二','三','四','五','六'];
+  const headerRow = document.createElement('div');
+  headerRow.className = 'grid';
+  weekdays.forEach(day => {
+    const cell = document.createElement('div');
+    cell.className = 'header-cell';
+    cell.textContent = day;
+    headerRow.appendChild(cell);
+  });
+  grid.appendChild(headerRow);
+
+  const firstDay = new Date(year, month - 1, 1).getDay();
+  const daysInMonth = new Date(year, month, 0).getDate();
+  const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
+
+  const calendarRow = document.createElement('div');
+  calendarRow.className = 'grid';
+
+  for (let i = 0; i < totalCells; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    if (i % 7 === 0) cell.classList.add('sunday');
+    if (i % 7 === 6) cell.classList.add('saturday');
+
+    const dayNum = i - firstDay + 1;
+    if (dayNum > 0 && dayNum <= daysInMonth) {
+      cell.textContent = dayNum;
+      const dateStr = `${year}-${month}-${dayNum}`;
+      if (holidays[dateStr]) {
+        const holidayTag = document.createElement('div');
+        holidayTag.className = 'holiday';
+        holidayTag.textContent = holidays[dateStr];
+        cell.appendChild(holidayTag);
       }
-    });
-
-    layoutSelect.addEventListener('change', function() {
-      calendarOutput.classList.remove('portrait', 'landscape');
-      calendarOutput.classList.add(layoutSelect.value);
-    });
-
-    calendarLayout.addEventListener('change', function() {
-      calendarOutput.classList.remove('vertical', 'horizontal');
-      calendarOutput.classList.add(calendarLayout.value);
-    });
-
-    const holidays = {
-      "2025-1-1": "元旦",
-      "2025-2-28": "和平紀念日",
-      "2025-4-4": "兒童節",
-      "2025-4-5": "清明節",
-      "2025-5-1": "勞動節",
-      "2025-6-1": "端午節",
-      "2025-9-28": "教師節",
-      "2025-10-10": "國慶日",
-      "2025-12-25": "聖誕節",
-      "2025-12-31": "跨年夜"
-    };
-
-    function generateCalendar() {
-      const year = parseInt(yearSelect.value);
-      const month = parseInt(monthSelect.value);
-      const grid = document.getElementById('calendarGrid');
-      grid.innerHTML = '';
-
-      const monthNames = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
-      const title = document.createElement('h2');
-      title.textContent = `${year}年 ${monthNames[month - 1]}`;
-      grid.appendChild(title);
-
-      const weekdays = ['日','一','二','三','四','五','六'];
-      const headerRow = document.createElement('div');
-      headerRow.className = 'grid';
-      weekdays.forEach(day => {
-        const cell = document.createElement('div');
-        cell.className = 'header-cell';
-        cell.textContent = day;
-        headerRow.appendChild(cell);
-      });
-      grid.appendChild(headerRow);
-
-      const firstDay = new Date(year, month - 1, 1).getDay();
-      const daysInMonth = new Date(year, month, 0).getDate();
-      const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
-
-      const calendarRow = document.createElement('div');
-      calendarRow.className = 'grid';
-
-      for (let i = 0; i < totalCells; i++) {
-        const cell = document.createElement('div');
-        cell.className = 'cell';
-        if (i % 7 === 0) cell.classList.add('sunday');
-        if (i % 7 === 6) cell.classList.add('saturday');
-
-        const dayNum = i - firstDay + 1;
-        if (dayNum > 0 && dayNum <= daysInMonth) {
-          cell.textContent = dayNum;
-          const dateStr = `${year}-${month}-${dayNum}`;
-          if (holidays[dateStr]) {
-            const holidayTag = document.createElement('div');
-            holidayTag.className = 'holiday';
-            holidayTag.textContent = holidays[dateStr];
-            cell.appendChild(holidayTag);
-          }
-        }
-        calendarRow.appendChild(cell);
-      }
-
-      grid.appendChild(calendarRow);
     }
+    calendarRow.appendChild(cell);
+  }
 
-    function exportCalendar() {
-      window.print();
-    }
+  grid.appendChild(calendarRow);
+}
 
-    // 頁面載入後自動產生預設月曆
-    window.addEventListener('DOMContentLoaded', generateCalendar);
-  </script>
+function exportCalendar() {
+  window.print();
+}
+
+window.addEventListener('DOMContentLoaded', generateCalendar);
