@@ -12,7 +12,6 @@
       padding: 20px;
       overflow: auto;
     }
-
     .controls {
       position: relative;
       z-index: 10;
@@ -21,13 +20,11 @@
       text-align: center;
       margin-bottom: 20px;
     }
-
     .controls select, .controls input, .controls button {
       margin: 5px;
       padding: 8px 12px;
       font-size: 1rem;
     }
-
     .calendar-output {
       display: flex;
       justify-content: center;
@@ -38,32 +35,27 @@
       margin: 0 auto;
       overflow: hidden;
     }
-
     .photo-preview img {
       width: 100%;
       max-height: 80vh;
       object-fit: contain;
     }
-
     .calendar-grid {
       width: 100%;
       padding: 20px;
     }
-
     .calendar-grid h2 {
       text-align: center;
       margin: 0 0 10px;
       font-size: 2rem;
       color: #2c3e50;
     }
-
     .grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       border-top: 1px solid #ccc;
       border-left: 1px solid #ccc;
     }
-
     .cell {
       min-height: 60px;
       border-right: 1px solid #ccc;
@@ -72,7 +64,6 @@
       font-size: 1rem;
       position: relative;
     }
-
     .header-cell {
       background: #2c3e50;
       color: #fff;
@@ -80,51 +71,37 @@
       font-weight: bold;
       padding: 6px 0;
     }
-
     .cell.sunday, .cell.saturday {
       color: #e74c3c;
     }
-
     .holiday {
       font-size: 0.7rem;
       font-weight: bold;
       color: #27ae60;
       margin-top: 2px;
     }
-
-    /* 直式排版 */
     .portrait {
       flex-direction: column;
       width: 210mm;
       height: auto;
     }
-
     .portrait .photo-preview img {
       max-height: 50%;
     }
-
-    /* 橫式排版 */
     .landscape {
       flex-direction: row;
       width: 297mm;
       height: auto;
     }
-
     .landscape .photo-preview img {
       max-width: 50%;
       height: 100%;
     }
-
-    /* 列印設定 */
     @media print {
       .controls { display: none; }
       body { background: #fff; padding: 0; }
-      .calendar-output {
-        box-shadow: none;
-      }
-      .calendar-grid {
-        padding: 10mm;
-      }
+      .calendar-output { box-shadow: none; }
+      .calendar-grid { padding: 10mm; }
     }
   </style>
 </head>
@@ -156,7 +133,6 @@
     const previewImage = document.getElementById('previewImage');
     const calendarOutput = document.getElementById('calendarOutput');
 
-    // 填入年份
     for (let y = 2020; y <= 2030; y++) {
       const opt = document.createElement('option');
       opt.value = y;
@@ -164,7 +140,6 @@
       yearSelect.appendChild(opt);
     }
 
-    // 填入月份
     for (let m = 1; m <= 12; m++) {
       const opt = document.createElement('option');
       opt.value = m;
@@ -172,12 +147,10 @@
       monthSelect.appendChild(opt);
     }
 
-    // 圖片上傳預覽 + 自動判斷比例
     document.getElementById('photoUpload').addEventListener('change', function(e) {
       const file = e.target.files[0];
       if (file) {
         previewImage.src = URL.createObjectURL(file);
-
         const img = new Image();
         img.onload = function() {
           calendarOutput.classList.remove('portrait', 'landscape');
@@ -193,13 +166,11 @@
       }
     });
 
-    // 手動切換排版
     layoutSelect.addEventListener('change', function() {
       calendarOutput.classList.remove('portrait', 'landscape');
       calendarOutput.classList.add(layoutSelect.value);
     });
 
-    // 假日資料表
     const holidays = {
       "2025-1-1": "元旦",
       "2025-2-28": "和平紀念日",
@@ -251,32 +222,6 @@
         const dayNum = i - firstDay + 1;
         if (dayNum > 0 && dayNum <= daysInMonth) {
           cell.textContent = dayNum;
-
-          const dateStr = `${year}-${month}-${dayNum}`;
-          if (holidays[dateStr]) {
-            const holidayTag = document.createElement('div');
-            holidayTag.className = 'holiday';
-            holidayTag.textContent = holidays[dateStr];
-            cell.appendChild(holidayTag);
-          }
-        }
-        calendarRow.appendChild(cell);
-      }
-
-      grid.appendChild(calendarRow);
-    }
-
-    function
-      for (let i = 0; i < totalCells; i++) {
-        const cell = document.createElement('div');
-        cell.className = 'cell';
-        if (i % 7 === 0) cell.classList.add('sunday');
-        if (i % 7 === 6) cell.classList.add('saturday');
-
-        const dayNum = i - firstDay + 1;
-        if (dayNum > 0 && dayNum <= daysInMonth) {
-          cell.textContent = dayNum;
-
           const dateStr = `${year}-${month}-${dayNum}`;
           if (holidays[dateStr]) {
             const holidayTag = document.createElement('div');
