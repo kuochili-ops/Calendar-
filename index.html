@@ -117,7 +117,6 @@
     </div>
     <div class="calendar-grid" id="calendarGrid"></div>
   </div>
-
   <script>
     const yearSelect = document.getElementById('yearSelect');
     const monthSelect = document.getElementById('monthSelect');
@@ -125,35 +124,6 @@
     const calendarLayout = document.getElementById('calendarLayout');
     const previewImage = document.getElementById('previewImage');
     const calendarOutput = document.getElementById('calendarOutput');
-
-    for (let y = 2020; y <= 2030; y++) {
-      const opt = document.createElement('option');
-      opt.value = y;
-      opt.textContent = y;
-      yearSelect.appendChild(opt);
-    }
-    for (let m = 1; m <= 12; m++) {
-      const opt = document.createElement('option');
-      opt.value = m;
-      opt.textContent = `${m} 月`;
-      monthSelect.appendChild(opt);
-    }
-    yearSelect.value = 2025;
-    monthSelect.value = 12;
-
-    document.getElementById('photoUpload').addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (file) previewImage.src = URL.createObjectURL(file);
-    });
-
-    layoutSelect.addEventListener('change', function() {
-      calendarOutput.classList.remove('portrait', 'landscape');
-      calendarOutput.classList.add(layoutSelect.value);
-    });
-    calendarLayout.addEventListener('change', function() {
-      calendarOutput.classList.remove('vertical', 'horizontal');
-      calendarOutput.classList.add(calendarLayout.value);
-    });
 
     const holidays = {
       "2025-1-1": "元旦",
@@ -167,6 +137,42 @@
       "2025-12-25": "聖誕節",
       "2025-12-31": "跨年夜"
     };
+
+    window.addEventListener('DOMContentLoaded', () => {
+      for (let y = 2020; y <= 2030; y++) {
+        const opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = y;
+        yearSelect.appendChild(opt);
+      }
+      for (let m = 1; m <= 12; m++) {
+        const opt = document.createElement('option');
+        opt.value = m;
+        opt.textContent = `${m} 月`;
+        monthSelect.appendChild(opt);
+      }
+
+      yearSelect.value = 2025;
+      monthSelect.value = 12;
+      previewImage.src = "IMG_5395.png";
+
+      generateCalendar();
+    });
+
+    document.getElementById('photoUpload').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) previewImage.src = URL.createObjectURL(file);
+    });
+
+    layoutSelect.addEventListener('change', function() {
+      calendarOutput.classList.remove('portrait', 'landscape');
+      calendarOutput.classList.add(layoutSelect.value);
+    });
+
+    calendarLayout.addEventListener('change', function() {
+      calendarOutput.classList.remove('vertical', 'horizontal');
+      calendarOutput.classList.add(calendarLayout.value);
+    });
 
     function generateCalendar() {
       const year = parseInt(yearSelect.value);
@@ -223,8 +229,6 @@
     function exportCalendar() {
       window.print();
     }
-
-    window.addEventListener('DOMContentLoaded', generateCalendar);
   </script>
 </body>
 </html>
